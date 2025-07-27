@@ -1,6 +1,6 @@
 Risk Score Prediction App
 
-1.Mission and Problem
+1. Mission and Problem
 This project predicts birth defect risks using maternal health data, improving healthcare access in African communities. 
 A Flutter app and FastAPI backend deliver accurate risk scores. The API is tested via Swagger UI for reliability. It supports medical professionals with data-driven insights.
 
@@ -10,7 +10,7 @@ A Flutter app and FastAPI backend deliver accurate risk scores. The API is teste
 The API is hosted at : https://christian-ishimwe-mml-summative.onrender.com  .
 Test the `/predict` POST endpoint using Swagger UI at https://christian-ishimwe-mml-summative.onrender.com/docs  .
 
-5. Example input: json
+4. Example input: json
 {
   "Maternal_age": 20,
   "Gestational_age_weeks": 32,
