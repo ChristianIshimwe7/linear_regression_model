@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field
 import joblib
 import pandas as pd
 import numpy as np
+import os
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -28,12 +29,24 @@ features = [
     'Gestational_diabetes', 'Pregnancy_hypertension', 'Previous_history_defects'
 ]
 
-# Load model and scaler
+# Loading function for model and scaler
+def load_model_and_scaler(model_path='best_model.pkl', scaler_path='scaler.pkl'):
+    try:
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"Model file not found at {model_path}")
+        if not os.path.exists(scaler_path):
+            raise FileNotFoundError(f"Scaler file not found at {scaler_path}")
+        model = joblib.load(model_path)
+        scaler = joblib.load(scaler_path)
+        return model, scaler
+    except Exception as e:
+        raise Exception(f"Failed to load model or scaler: {str(e)}")
+
+# Load model and scaler at startup
 try:
-    scaler = joblib.load('scaler.pkl')
-    best_model = joblib.load('best_model.pkl')
-except FileNotFoundError:
-    raise Exception("Model or scaler file not found. Ensure 'best_model.pkl' and 'scaler.pkl' are in the same directory.")
+    best_model, scaler = load_model_and_scaler()
+except Exception as e:
+    raise Exception(f"Startup error: {str(e)}")
 
 # Pydantic model for input validation
 class PredictionInput(BaseModel):
